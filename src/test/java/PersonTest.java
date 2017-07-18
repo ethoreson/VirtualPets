@@ -2,6 +2,7 @@ import org.junit.*;
 import static org.junit.Assert.*;
 import org.sql2o.*;
 import java.util.Arrays;
+import java.util.List;
 
 public class PersonTest {
 
@@ -77,6 +78,47 @@ public class PersonTest {
     secondMonster.save();
     Object[] monsters = new Object[] { firstMonster, secondMonster };
     assertTrue(testPerson.getMonsters().containsAll(Arrays.asList(monsters)));
+  }
+
+  @Test
+  public void getCommunities_returnsAllCommunities_List() {
+    Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+    testCommunity.save();
+    Person testPerson = new Person("Henry", "henry@henry.com");
+    testPerson.save();
+    testCommunity.addPerson(testPerson);
+    List savedCommunities = testPerson.getCommunities();
+    assertEquals(1, savedCommunities.size());
+  }
+
+  @Test
+  public void delete_deletesPerson_true() {
+    Person testPerson = new Person("Henry", "henry@henry.com");
+    testPerson.save();
+    testPerson.delete();
+    assertEquals(0, Person.all().size());
+  }
+
+  @Test
+  public void delete_deletesAllPersonsAndCommunitiesAssociations() {
+    Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+    testCommunity.save();
+    Person testPerson = new Person("Henry", "henry@henry.com");
+    testPerson.save();
+    testCommunity.addPerson(testPerson);
+    testCommunity.delete();
+    assertEquals(0, testPerson.getCommunities().size());
+  }
+
+  @Test
+  public void leaveCommunity_removesAssociationWithSpecifiedCommunity() {
+    Community testCommunity = new Community("Fire Enthusiasts", "Flame on!");
+    testCommunity.save();
+    Person testPerson = new Person("Henry", "henry@henry.com");
+    testPerson.save();
+    testPerson.leaveCommunity(testCommunity);
+    List savedCommunities = testPerson.getCommunities();
+    assertEquals(0, savedCommunities.size());
   }
 
 }
