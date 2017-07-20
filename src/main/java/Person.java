@@ -8,6 +8,9 @@ public class Person {
   private int id;
 
   public Person(String name, String email) {
+    if (!(email.contains("@")) || !(email.contains("."))) {
+      throw new IllegalArgumentException("Please enter valid email");
+    }
     this.name = name;
     this.email = email;
   }
