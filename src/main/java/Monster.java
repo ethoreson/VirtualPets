@@ -80,11 +80,15 @@ public abstract class Monster {
 
   public void save() {
     try(Connection con = DB.sql2o.open()) {
-      String sql = "INSERT INTO monsters (name, personId, birthday, type) VALUES (:name, :personId, now(), :type)";
+      String sql = "INSERT INTO monsters (name, personId, foodLevel, sleepLevel, playLevel, lastAte, lastSlept, lastPlayed, birthday, type) VALUES (:name, :personId, :foodLevel, :sleepLevel, :playLevel, now(), now(), now(), now(), :type)";
       this.id = (int) con.createQuery(sql, true)
         .addParameter("name", this.name)
         .addParameter("personId", this.personId)
+        .addParameter("foodLevel", this.foodLevel)
+        .addParameter("sleepLevel", this.sleepLevel)
+        .addParameter("playLevel", this.playLevel)
         .addParameter("type", this.type)
+
         .executeUpdate()
         .getKey();
     }
