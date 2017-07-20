@@ -4,7 +4,7 @@ import java.util.List;
 import java.sql.Timestamp;
 
 public class FireMonster extends Monster {
-  private int fireLevel;
+  public int fireLevel;
   public Timestamp lastKindling;
   public static final int MAX_FIRE_LEVEL = 10;
   public static final String DATABASE_TYPE = "fire";
@@ -78,6 +78,23 @@ public class FireMonster extends Monster {
         .throwOnMappingFailure(false)
         .executeAndFetchFirst(FireMonster.class);
     return monster;
+    }
+  }
+
+  public void save() {
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "INSERT INTO monsters (name, personId, foodLevel, sleepLevel, playLevel, lastAte, lastSlept, lastPlayed, birthday, type, lastKindling, fireLevel) VALUES (:name, :personId, :foodLevel, :sleepLevel, :playLevel, now(), now(), now(), now(), :type, now(), :fireLevel)";
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("name", this.name)
+        .addParameter("personId", this.personId)
+        .addParameter("foodLevel", this.foodLevel)
+        .addParameter("sleepLevel", this.sleepLevel)
+        .addParameter("playLevel", this.playLevel)
+        .addParameter("type", this.type)
+        .addParameter("fireLevel", this.fireLevel)
+        .throwOnMappingFailure(false)
+        .executeUpdate()
+        .getKey();
     }
   }
 

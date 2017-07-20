@@ -4,7 +4,7 @@ import java.util.List;
 import java.sql.Timestamp;
 
 public class WaterMonster extends Monster {
-  private int waterLevel;
+  public int waterLevel;
   public Timestamp lastWater;
   public static final int MAX_WATER_LEVEL = 8;
   public static final String DATABASE_TYPE = "water";
@@ -50,7 +50,7 @@ public class WaterMonster extends Monster {
       waterLevel--;
     }
   }
-  
+
   @Override
  public boolean isAlive() {
    if (foodLevel <= MIN_ALL_LEVELS ||
@@ -79,6 +79,23 @@ public class WaterMonster extends Monster {
        .throwOnMappingFailure(false)
        .executeAndFetchFirst(WaterMonster.class);
    return monster;
+   }
+ }
+
+ public void save() {
+   try(Connection con = DB.sql2o.open()) {
+     String sql = "INSERT INTO monsters (name, personId, foodLevel, sleepLevel, playLevel, lastAte, lastSlept, lastPlayed, birthday, type, lastWater, waterLevel) VALUES (:name, :personId, :foodLevel, :sleepLevel, :playLevel, now(), now(), now(), now(), :type, now(), :waterLevel)";
+     this.id = (int) con.createQuery(sql, true)
+       .addParameter("name", this.name)
+       .addParameter("personId", this.personId)
+       .addParameter("foodLevel", this.foodLevel)
+       .addParameter("sleepLevel", this.sleepLevel)
+       .addParameter("playLevel", this.playLevel)
+       .addParameter("type", this.type)
+       .addParameter("waterLevel", this.waterLevel)
+       .throwOnMappingFailure(false)
+       .executeUpdate()
+       .getKey();
    }
  }
 

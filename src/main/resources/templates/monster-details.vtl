@@ -16,14 +16,12 @@
   <form action="/sleep" method="post">
     <button type="submit" class="btn btn-success">Sleep</button>
   </form>
-
-
   #if ($monster.getType().equals("fire"))
     <h2>Fire Level: $monster.getFireLevel()</h2>
     <h3>Last Kindling: $monster.getLastKindling()</h3>
-    <form action="/kindle" method="post">
-      <button type="submit" class="btn btn-danger">Kindle</button>
-    </form>
+      <form action="/kindle" method="post">
+        <button type="submit" class="btn btn-danger">Kindle</button>
+      </form>
   #else
     <h2>Water Level: $monster.getWaterLevel()</h2>
     <h3>Last Watering: $monster.getLastWater()</h3>
