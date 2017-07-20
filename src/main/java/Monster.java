@@ -104,8 +104,12 @@ public abstract class Monster {
     con.createQuery(sql)
       .addParameter("id", id)
       .executeUpdate();
-    }
-  playLevel++;
+    playLevel++;
+    String sqlfeed = "UPDATE monsters SET playLevel = " + playLevel +  " WHERE id = :id";
+    con.createQuery(sqlfeed)
+      .addParameter("id", id)
+      .executeUpdate();
+  }
 }
 
   public void sleep(){
@@ -117,8 +121,12 @@ public abstract class Monster {
       con.createQuery(sql)
         .addParameter("id", id)
         .executeUpdate();
-      }
-    sleepLevel++;
+      sleepLevel++;
+      String sqlfeed = "UPDATE monsters SET sleepLevel = " + sleepLevel +  " WHERE id = :id";
+      con.createQuery(sqlfeed)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
   }
 
   public void feed(){
@@ -130,8 +138,12 @@ public abstract class Monster {
     con.createQuery(sql)
       .addParameter("id", id)
       .executeUpdate();
-    }
-  foodLevel++;
+    foodLevel++;
+    String sqlfeed = "UPDATE monsters SET foodLevel = " + foodLevel +  " WHERE id = :id";
+    con.createQuery(sqlfeed)
+      .addParameter("id", id)
+      .executeUpdate();
+  }
 }
 
 public void startTimer(){

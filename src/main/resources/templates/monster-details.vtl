@@ -3,17 +3,17 @@
 <div class="jumbotron">
   <h2>Play Level: $monster.getPlayLevel()</h2>
   <h3>Last Played: $monster.getLastPlayed()</h3>
-  <form action="/play" method="post">
+  <form action="/user/$user.getId()/monster/$monster.getId()/$monster.getType()/play" method="post">
     <button type="submit" class="btn btn-success">Play</button>
   </form>
   <h2>Food Level: $monster.getFoodLevel()</h2>
   <h3>Last Fed: $monster.getLastAte()</h3>
-  <form action="/feed" method="post">
+  <form action="/user/$user.getId()/monster/$monster.getId()/$monster.getType()/feed" method="post">
     <button type="submit" class="btn btn-success">Feed</button>
   </form>
   <h2>Sleep Level: $monster.getSleepLevel()</h2>
   <h3>Last slept: $monster.getLastSlept()</h3>
-  <form action="/sleep" method="post">
+  <form action="/user/$user.getId()/monster/$monster.getId()/$monster.getType()/sleep" method="post">
     <button type="submit" class="btn btn-success">Sleep</button>
   </form>
   #if ($monster.getType().equals("fire"))
