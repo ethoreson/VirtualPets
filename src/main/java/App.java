@@ -72,7 +72,7 @@ public class App {
     get("/user/:userId/monster/:monsterId", (request, response) -> {
       Map<String, Object> model = new HashMap<String, Object>();
       Person user = Person.find(Integer.parseInt(request.params(":userId")));
-      if (FireMonster.find(Integer.parseInt(request.params(":monsterId"))) != null) {
+      if ((FireMonster.find(Integer.parseInt(request.params(":monsterId")))).getType().equals("fire")) {
         FireMonster monster = FireMonster.find(Integer.parseInt(request.params(":monsterId")));
         model.put("monster", monster);
       } else {

@@ -22,7 +22,8 @@
       <form action="/kindle" method="post">
         <button type="submit" class="btn btn-danger">Kindle</button>
       </form>
-  #else
+  #end
+  #if ($monster.getType().equals("water"))
     <h2>Water Level: $monster.getWaterLevel()</h2>
     <h3>Last Watering: $monster.getLastWater()</h3>
     <form action="/water" method="post">
