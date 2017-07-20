@@ -5,8 +5,21 @@
   <li>$user.getEmail()</li>
 </ul>
 
+#if(!($monsters.isEmpty()))
 <ul>
   #foreach ($monster in $monsters)
     <li><a href="/user/$user.getId()/monster/$monster.getId()">$monster.getName()</a></li>
   #end
 </ul>
+#end
+
+<form action="/user/$user.getId()/monster/$monster.getId()" method="post">
+  <label for="monster-name">Name of Monster: </label>
+  <input id="monster-name" name="monster-name" type="text">
+  <label for="monster-type">Type of Monster: </label>
+  <select class="form-control" id="monster-type" name="monster-type">
+    <option value="fire">FireMonster</option>
+    <option value="water">WaterMonster</option>
+  </select>
+  <button type="submit" class="btn btn-success">Create Monster!</button>
+</form>

@@ -24,6 +24,10 @@ public abstract class Monster {
   public static final int MAX_PLAY_LEVEL = 12;
   public static final int MIN_ALL_LEVELS = 0;
 
+  public String getType() {
+    return type;
+  }
+
   public String getName(){
     return name;
   }

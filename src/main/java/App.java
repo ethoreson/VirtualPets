@@ -41,7 +41,46 @@ public class App {
       Map<String, Object> model = new HashMap<String, Object>();
       Person user = Person.find(Integer.parseInt(request.params(":id")));
       model.put("user", user);
+      model.put("monsters", user.getMonsters());
       model.put("template", "templates/user-details.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/user/:userId/monster/:monsterId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Person user = Person.find(Integer.parseInt(request.params(":userId")));
+      String monsterName = request.queryParams("monster-name");
+      String monsterType = request.queryParams("monster-type");
+      if (monsterType.equals("fire")) {
+        FireMonster monster = new FireMonster(monsterName, user.getId());
+        monster.save();
+        model.put("monster", monster);
+        model.put("user", user);
+        String url = String.format("/user/%d/monster/%d", user.getId(), monster.getId());
+        response.redirect(url);
+      } else {
+        WaterMonster monster = new WaterMonster(monsterName, user.getId());
+        monster.save();
+        model.put("monster", monster);
+        model.put("user", user);
+        String url = String.format("/user/%d/monster/%d", user.getId(), monster.getId());
+        response.redirect(url);
+      }
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/user/:userId/monster/:monsterId", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      Person user = Person.find(Integer.parseInt(request.params(":userId")));
+      if (FireMonster.find(Integer.parseInt(request.params(":monsterId"))) != null) {
+        FireMonster monster = FireMonster.find(Integer.parseInt(request.params(":monsterId")));
+        model.put("monster", monster);
+      } else {
+        WaterMonster monster = WaterMonster.find(Integer.parseInt(request.params(":monsterId")));
+        model.put("monster", monster);
+      }
+      model.put("user", user);
+      model.put("template", "templates/monster-details.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
