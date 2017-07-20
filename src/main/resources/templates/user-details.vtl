@@ -1,0 +1,12 @@
+<!-- person-details.vtl-->
+<h1>Person details</h1>
+<ul>
+  <li>$user.getName()</li>
+  <li>$user.getEmail()</li>
+</ul>
+
+<ul>
+  #foreach ($monster in $monsters)
+    <li><a href="/user/$user.getId()/monster/$monster.getId()">$monster.getName()</a></li>
+  #end
+</ul>

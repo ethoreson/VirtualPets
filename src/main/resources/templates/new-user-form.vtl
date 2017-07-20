@@ -1,0 +1,15 @@
+<!--new-user-form.vtl-->
+<h1>Create Your New User</h1>
+
+<form action="/user/$user.getId()" method="post">
+  <label for="name">User's Name: </label>
+  <input id="name" name="name" type="text">
+  <label for="email">User's Email: </label>
+  <input id="email" email="email" type="text">
+  <button type="submit" class="btn btn-primary">Add User</button>
+</form>
+
+<a href="/"><h3>Back to Home Page</h3></a>
+
+
+<!--new-user-form.vtl-->

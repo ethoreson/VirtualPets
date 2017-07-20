@@ -1,0 +1,12 @@
+<!--index.vtl-->
+<h1>Welcome to E + M's Pocket Monster Web App!</h1>
+
+<ul>
+#foreach($user in $users)
+    <li><a href="/users/$user.getId()">$user.getName()</a></li>
+#end
+</ul>
+
+<a href="/user-new">Create New User</a>
+
+<!--index.vtl-->
